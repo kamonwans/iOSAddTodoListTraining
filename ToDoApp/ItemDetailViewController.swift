@@ -9,12 +9,12 @@
 import UIKit
 
 protocol AddItemViewControllerDelegate:class {
-    func addItemViewController(controller: AddItemViewController,didAdd item: TodoItem)
-    func addItemViewController(controller: AddItemViewController,didEdititem: TodoItem)
-    func addItemViewControllerDidCancel(controller: AddItemViewController)
+    func addItemViewController(controller: ItemDetailViewController,didAdd item: TodoItem)
+    func addItemViewController(controller: ItemDetailViewController,didEdititem: TodoItem)
+    func addItemViewControllerDidCancel(controller: ItemDetailViewController)
 }
 
-class AddItemViewController: UIViewController {
+class ItemDetailViewController: UIViewController {
     
     weak var delegate:AddItemViewControllerDelegate?
     var todoItem: TodoItem?

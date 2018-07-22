@@ -13,7 +13,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBOutlet weak var tableView: UITableView!
     
-    func addItemViewController(controller: AddItemViewController, didAdd item: TodoItem) {
+    func addItemViewController(controller: ItemDetailViewController, didAdd item: TodoItem) {
         todo.add(item: item)
         if let index = todo.index(of: item) {
             tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
@@ -21,11 +21,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         controller.dismiss(animated: true, completion: nil)
     }
     
-    func addItemViewControllerDidCancel(controller: AddItemViewController) {
+    func addItemViewControllerDidCancel(controller: ItemDetailViewController) {
          controller.dismiss(animated: true, completion: nil)
     }
     
-    func addItemViewController(controller: AddItemViewController, didEdititem: TodoItem) {
+    func addItemViewController(controller: ItemDetailViewController, didEdititem: TodoItem) {
         if let index = todo.index(of: didEdititem) {
             tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
         }
@@ -72,12 +72,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "openAddPage"{
             let navigationController = segue.destination as? UINavigationController
-            let controller = navigationController?.topViewController as? AddItemViewController
+            let controller = navigationController?.topViewController as? ItemDetailViewController
             
             controller?.delegate = self
         }else if segue.identifier == "openEditPage"{
             let navigationController = segue.destination as? UINavigationController
-            let controller = navigationController?.topViewController as? AddItemViewController
+            let controller = navigationController?.topViewController as? ItemDetailViewController
             controller?.delegate = self
             controller?.todoItem = sender as? TodoItem
         }

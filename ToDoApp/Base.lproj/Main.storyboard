@@ -75,7 +75,7 @@
         <scene sceneID="tat-xd-r2e">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ily-Bn-Kr4" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="K5B-4d-K08" customClass="AddItemViewController" customModule="ToDoApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="K5B-4d-K08" customClass="ItemDetailViewController" customModule="ToDoApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5cZ-RF-0xa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

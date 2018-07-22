@@ -14,6 +14,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             todo.item(at: indexPath.row).toggleIsDone()
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
+        savetodo()
     }
     
     
@@ -28,6 +29,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
         }
         controller.dismiss(animated: true, completion: nil)
+        savetodo()
     }
     
     func ItemDetailViewControllerDidCancel(controller: ItemDetailViewController) {
@@ -43,6 +45,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
         }
         navigationController?.popViewController(animated: true)
+        savetodo()
         
     }
 
@@ -56,6 +59,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if editingStyle == .delete{
             todo.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            savetodo()
         }
     }
     
@@ -75,15 +79,55 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         performSegue(withIdentifier: "openEditPage", sender: todo.item(at: indexPath.row))
     }
     
+    //MARK: initial
     override func viewDidLoad() {
         super.viewDidLoad()
-        todo.add(item: TodoItem(title: "Test"))
-        todo.add(item: TodoItem(title: "Learning Switf 4"))
-        todo.add(item: TodoItem(title: "Hello"))
-        todo.add(item: TodoItem(title: "Learning Switf 3",isDone:true))
-        
+        loadTodo()
+       
+    }
+    
+    func loadTodo(){
+        do {
+            let fileManager = FileManager.default
+            var destinationURL = try fileManager.url(for: .documentDirectory, in: .userDomainMask,
+                                                  appropriateFor: nil, create: false)
+            
+            destinationURL.appendPathComponent("todo")
+            destinationURL.appendPathExtension("plist")
+            
+            if fileManager.fileExists(atPath: destinationURL.path){
+                let data = try Data(contentsOf: destinationURL)
+                let decoder = PropertyListDecoder()
+                todo = try decoder.decode(Todo.self, from: data)
+                tableView.reloadData()
+            }
+            
+        } catch {
+            print("can not open file: \(error)")
+        }
     }
 
+    func  savetodo(){
+        do {
+            let fileManager = FileManager.default
+            var destinationURL = try fileManager.url(for: .documentDirectory, in: .userDomainMask,
+                                                     appropriateFor: nil, create: false)
+            
+            destinationURL.appendPathComponent("todo")
+            destinationURL.appendPathExtension("plist")
+            
+            print(destinationURL.path)
+            
+            let encoder = PropertyListEncoder()
+            encoder.outputFormat = .xml
+            let data = try encoder.encode(todo)
+            try data.write(to: destinationURL)
+
+            
+        } catch {
+            print("can not open file: \(error)")
+        }
+    }
     //MARK: Navigation segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "openAddPage"{

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TodoViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ItemDetailViewControllerDelegate, TodoItemTableCellDelegate{
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ItemDetailViewControllerDelegate, TodoItemTableCellDelegate{
     func todoItemTableViewCellCheckBoxButtonDidTap(cell: TodoItemTableViewCell) {
         if let indexPath = tableView.indexPath(for: cell){
             todo.item(at: indexPath.row).toggleIsDone()

@@ -8,12 +8,12 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddItemViewControllerDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ItemDetailViewControllerDelegate {
     
     
     @IBOutlet weak var tableView: UITableView!
     
-    func addItemViewController(controller: ItemDetailViewController, didAdd item: TodoItem) {
+    func ItemDetailViewController(controller: ItemDetailViewController, didAdd item: TodoItem) {
         todo.add(item: item)
         if let index = todo.index(of: item) {
             tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
@@ -21,11 +21,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         controller.dismiss(animated: true, completion: nil)
     }
     
-    func addItemViewControllerDidCancel(controller: ItemDetailViewController) {
+    func ItemDetailViewControllerDidCancel(controller: ItemDetailViewController) {
          controller.dismiss(animated: true, completion: nil)
     }
     
-    func addItemViewController(controller: ItemDetailViewController, didEdititem: TodoItem) {
+    func ItemDetailViewController(controller: ItemDetailViewController, didEdititem: TodoItem) {
         if let index = todo.index(of: didEdititem) {
             tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
         }

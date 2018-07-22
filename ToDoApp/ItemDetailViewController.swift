@@ -8,22 +8,22 @@
 
 import UIKit
 
-protocol AddItemViewControllerDelegate:class {
-    func addItemViewController(controller: ItemDetailViewController,didAdd item: TodoItem)
-    func addItemViewController(controller: ItemDetailViewController,didEdititem: TodoItem)
-    func addItemViewControllerDidCancel(controller: ItemDetailViewController)
+protocol ItemDetailViewControllerDelegate:class {
+    func ItemDetailViewController(controller: ItemDetailViewController,didAdd item: TodoItem)
+    func ItemDetailViewController(controller: ItemDetailViewController,didEdititem: TodoItem)
+    func ItemDetailViewControllerDidCancel(controller: ItemDetailViewController)
 }
 
 class ItemDetailViewController: UIViewController {
     
-    weak var delegate:AddItemViewControllerDelegate?
+    weak var delegate:ItemDetailViewControllerDelegate?
     var todoItem: TodoItem?
     
     @IBOutlet weak var titleTextField: UITextField?
     @IBOutlet weak var isDoneSwitf: UISwitch?
 
     @IBAction func cancelButtonDidtap(_ sender: UIBarButtonItem) {
-        delegate?.addItemViewControllerDidCancel(controller: self)
+        delegate?.ItemDetailViewControllerDidCancel(controller: self)
     }
     
     @IBAction func doneButtonDidTap(){
@@ -34,10 +34,10 @@ class ItemDetailViewController: UIViewController {
             if let item = todoItem{
                 item.title = title
                 item.isDone = isDone
-                delegate?.addItemViewController(controller: self, didAdd: item)
+                delegate?.ItemDetailViewController(controller: self, didAdd: item)
             }else{
                 let item = TodoItem(title: title, isDone: isDone)
-                delegate?.addItemViewController(controller: self, didAdd:item)
+                delegate?.ItemDetailViewController(controller: self, didAdd:item)
             }
         }
         

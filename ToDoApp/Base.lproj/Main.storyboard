@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,22 +23,46 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="todoItemCell" textLabel="qSz-2k-JG8" style="IBUITableViewCellStyleDefault" id="fBs-vz-nYk">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="todoItemCell" id="fBs-vz-nYk" customClass="TodoItemTableViewCell" customModule="ToDoApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fBs-vz-nYk" id="3Bc-uv-i0b">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qSz-2k-JG8">
-                                                    <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="PYq-M2-61X">
+                                                    <rect key="frame" x="15" y="4" width="322" height="35.5"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="03I-tA-Kes">
+                                                            <rect key="frame" x="0.0" y="0.0" width="35.5" height="35.5"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="03I-tA-Kes" secondAttribute="height" multiplier="1:1" id="ErQ-ei-RRa"/>
+                                                            </constraints>
+                                                            <state key="normal" image="check"/>
+                                                            <connections>
+                                                                <action selector="checkBoxButtonDidTap" destination="fBs-vz-nYk" eventType="touchUpInside" id="6Cq-G1-2mo"/>
+                                                            </connections>
+                                                        </button>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jdv-6c-Ju6">
+                                                            <rect key="frame" x="41.5" y="0.0" width="280.5" height="35.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="PYq-M2-61X" secondAttribute="bottom" constant="4" id="3dR-nS-YWg"/>
+                                                <constraint firstAttribute="trailing" secondItem="PYq-M2-61X" secondAttribute="trailing" constant="5" id="Acm-pV-dkt"/>
+                                                <constraint firstItem="PYq-M2-61X" firstAttribute="leading" secondItem="3Bc-uv-i0b" secondAttribute="leading" constant="15" id="IT4-Od-fvG"/>
+                                                <constraint firstItem="PYq-M2-61X" firstAttribute="top" secondItem="3Bc-uv-i0b" secondAttribute="top" constant="4" id="n3e-gE-Aqa"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="checkBoxButton" destination="03I-tA-Kes" id="hxS-f9-nWD"/>
+                                            <outlet property="titleLabel" destination="Jdv-6c-Ju6" id="LQh-gM-2Fa"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -171,6 +196,9 @@
             <point key="canvasLocation" x="2008.8" y="32.833583208395808"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="check" width="36" height="36"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Urm-GD-NP2"/>
     </inferredMetricsTieBreakers>

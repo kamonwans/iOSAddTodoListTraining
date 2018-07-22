@@ -8,7 +8,14 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ItemDetailViewControllerDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ItemDetailViewControllerDelegate, TodoItemTableCellDelegate{
+    func todoItemTableViewCellCheckBoxButtonDidTap(cell: TodoItemTableViewCell) {
+        if let indexPath = tableView.indexPath(for: cell){
+            todo.item(at: indexPath.row).toggleIsDone()
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
     
     var todo = Todo()
     
@@ -27,8 +34,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
          controller.dismiss(animated: true, completion: nil)
     }
     
-    func ItemDetailViewController(controller: ItemDetailViewController, didEdititem: TodoItem) {
-        if let index = todo.index(of: didEdititem) {
+    func ItemDetailViewController(controller: ItemDetailViewController, didEdit item: TodoItem) {
+        if let index = todo.index(of: item) {
             tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
         }
         controller.dismiss(animated: true, completion: nil)
@@ -49,9 +56,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "todoItemCell", for: indexPath)
-        cell.textLabel?.text = todo.item(at: indexPath.row).title
-        cell.accessoryType = todo.item(at: indexPath.row).isDone ? .checkmark: .none
+        let cell = tableView.dequeueReusableCell(withIdentifier: "todoItemCell", for: indexPath) as! TodoItemTableViewCell
+        let item = todo.item(at: indexPath.row)
+        cell.delegate = self
+        cell.titleLabel.text = item.title
+        cell.checkBoxButton.setImage(UIImage(named: item.isDone ? "check": "uncheck"), for: .normal)
+       
         return cell
     }
     

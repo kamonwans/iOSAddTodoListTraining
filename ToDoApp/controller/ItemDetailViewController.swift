@@ -10,7 +10,7 @@ import UIKit
 
 protocol ItemDetailViewControllerDelegate:class {
     func ItemDetailViewController(controller: ItemDetailViewController,didAdd item: TodoItem)
-    func ItemDetailViewController(controller: ItemDetailViewController,didEdititem: TodoItem)
+    func ItemDetailViewController(controller: ItemDetailViewController,didEdit item: TodoItem)
     func ItemDetailViewControllerDidCancel(controller: ItemDetailViewController)
 }
 
@@ -34,7 +34,7 @@ class ItemDetailViewController: UIViewController {
             if let item = todoItem{
                 item.title = title
                 item.isDone = isDone
-                delegate?.ItemDetailViewController(controller: self, didAdd: item)
+                delegate?.ItemDetailViewController(controller: self, didEdit: item)
             }else{
                 let item = TodoItem(title: title, isDone: isDone)
                 delegate?.ItemDetailViewController(controller: self, didAdd:item)

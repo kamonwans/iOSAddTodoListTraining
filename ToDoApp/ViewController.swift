@@ -25,6 +25,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
          controller.dismiss(animated: true, completion: nil)
     }
     
+    func addItemViewController(controller: AddItemViewController, didEdititem: TodoItem) {
+        if let index = todo.index(of: didEdititem) {
+            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+        }
+        controller.dismiss(animated: true, completion: nil)
+        
+    }
+    
     var todo = Todo()
     
     
@@ -46,9 +54,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        performSegue(withIdentifier: "openEditPage", sender: todo.item(at: indexPath.row))
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         todo.add(item: TodoItem(title: "Test"))
@@ -64,7 +75,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             let controller = navigationController?.topViewController as? AddItemViewController
             
             controller?.delegate = self
+        }else if segue.identifier == "openEditPage"{
+            let navigationController = segue.destination as? UINavigationController
+            let controller = navigationController?.topViewController as? AddItemViewController
+            controller?.delegate = self
+            controller?.todoItem = sender as? TodoItem
         }
+        
     }
 
 }

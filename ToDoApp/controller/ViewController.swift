@@ -10,9 +10,11 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ItemDetailViewControllerDelegate {
     
+    var todo = Todo()
     
     @IBOutlet weak var tableView: UITableView!
     
+    //MARK: ItemDetail Delegate
     func ItemDetailViewController(controller: ItemDetailViewController, didAdd item: TodoItem) {
         todo.add(item: item)
         if let index = todo.index(of: item) {
@@ -32,19 +34,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         controller.dismiss(animated: true, completion: nil)
         
     }
-    
-    var todo = Todo()
-    
-    
+
+
+    //MARK: tableView data source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return todo.totalItems
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       let cell = tableView.dequeueReusableCell(withIdentifier: "todoItemCell", for: indexPath)
-        cell.textLabel?.text = todo.item(at: indexPath.row).title
-        cell.accessoryType = todo.item(at: indexPath.row).isDone ? .checkmark: .none
-        return cell
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -54,7 +48,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "todoItemCell", for: indexPath)
+        cell.textLabel?.text = todo.item(at: indexPath.row).title
+        cell.accessoryType = todo.item(at: indexPath.row).isDone ? .checkmark: .none
+        return cell
+    }
     
+    //MARK: TableView delegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier: "openEditPage", sender: todo.item(at: indexPath.row))
@@ -69,6 +70,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
 
+    //MARK: Navigation segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "openAddPage"{
             let navigationController = segue.destination as? UINavigationController

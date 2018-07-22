@@ -31,14 +31,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func ItemDetailViewControllerDidCancel(controller: ItemDetailViewController) {
+        if controller.isInEditMode{
+            navigationController?.popViewController(animated: true)
+        }else{
          controller.dismiss(animated: true, completion: nil)
+        }
     }
     
     func ItemDetailViewController(controller: ItemDetailViewController, didEdit item: TodoItem) {
         if let index = todo.index(of: item) {
             tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
         }
-        controller.dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
         
     }
 
@@ -88,8 +92,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             controller?.delegate = self
         }else if segue.identifier == "openEditPage"{
-            let navigationController = segue.destination as? UINavigationController
-            let controller = navigationController?.topViewController as? ItemDetailViewController
+            let controller = segue.destination as? ItemDetailViewController
+           
             controller?.delegate = self
             controller?.todoItem = sender as? TodoItem
         }

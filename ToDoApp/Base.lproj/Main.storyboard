@@ -70,7 +70,7 @@
         <!--Add new Item-->
         <scene sceneID="tat-xd-r2e">
             <objects>
-                <viewController id="K5B-4d-K08" sceneMemberID="viewController">
+                <viewController id="K5B-4d-K08" customClass="AddItemViewController" customModule="ToDoApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5cZ-RF-0xa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -78,8 +78,16 @@
                         <viewLayoutGuide key="safeArea" id="E5Y-2c-GJE"/>
                     </view>
                     <navigationItem key="navigationItem" title="Add new Item" id="ESz-LR-xiX">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="ICp-Ma-Vvo"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="ZxB-hi-FVb"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="ICp-Ma-Vvo">
+                            <connections>
+                                <action selector="cancelButtonDidtap:" destination="K5B-4d-K08" id="nAM-RX-xzJ"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="ZxB-hi-FVb">
+                            <connections>
+                                <action selector="doneButtonDidTap" destination="K5B-4d-K08" id="6L6-iC-tdB"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ily-Bn-Kr4" userLabel="First Responder" sceneMemberID="firstResponder"/>

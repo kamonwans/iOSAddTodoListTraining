@@ -8,7 +8,23 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddItemViewControllerDelegate {
+    
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    func addItemViewController(controller: AddItemViewController, didAdd item: TodoItem) {
+        todo.add(item: item)
+        if let index = todo.index(of: item) {
+            tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+        }
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    func addItemViewControllerDidCancel(controller: AddItemViewController) {
+         controller.dismiss(animated: true, completion: nil)
+    }
+    
     var todo = Todo()
     
     
@@ -29,12 +45,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         todo.add(item: TodoItem(title: "Test"))
-        todo.add(item: TodoItem(title: "Learning Switf 3"))
+        todo.add(item: TodoItem(title: "Learning Switf 4"))
         todo.add(item: TodoItem(title: "Hello"))
         todo.add(item: TodoItem(title: "Learning Switf 3",isDone:true))
         
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "openAddPage"{
+            let navigationController = segue.destination as? UINavigationController
+            let controller = navigationController?.topViewController as? AddItemViewController
+            
+            controller?.delegate = self
+        }
+    }
 
 }
 

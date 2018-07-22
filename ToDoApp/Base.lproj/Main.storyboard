@@ -58,10 +58,13 @@
                     <navigationItem key="navigationItem" title="TODO" id="tRh-gJ-jbh">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="rQl-4m-eGB">
                             <connections>
-                                <segue destination="saL-8z-aTl" kind="presentation" id="LfT-Iq-wTv"/>
+                                <segue destination="saL-8z-aTl" kind="presentation" identifier="openAddPage" id="LfT-Iq-wTv"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="Tco-gd-aAg" id="Xkm-2n-6J1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -70,11 +73,44 @@
         <!--Add new Item-->
         <scene sceneID="tat-xd-r2e">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ily-Bn-Kr4" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="K5B-4d-K08" customClass="AddItemViewController" customModule="ToDoApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5cZ-RF-0xa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="pJt-c4-5hL">
+                                <rect key="frame" x="15" y="79" width="345" height="69"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MDO-3N-dyE">
+                                        <rect key="frame" x="0.0" y="0.0" width="345" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fsf-rr-Elm">
+                                        <rect key="frame" x="0.0" y="38" width="345" height="31"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="is done" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q4F-2x-UFa">
+                                                <rect key="frame" x="0.0" y="0.0" width="296" height="31"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ttm-bh-zqV">
+                                                <rect key="frame" x="296" y="0.0" width="51" height="31"/>
+                                            </switch>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="E5Y-2c-GJE" firstAttribute="trailing" secondItem="pJt-c4-5hL" secondAttribute="trailing" constant="15" id="JF9-ms-3eK"/>
+                            <constraint firstItem="pJt-c4-5hL" firstAttribute="top" secondItem="E5Y-2c-GJE" secondAttribute="top" constant="15" id="TkI-t2-4qV"/>
+                            <constraint firstItem="pJt-c4-5hL" firstAttribute="leading" secondItem="E5Y-2c-GJE" secondAttribute="leading" constant="15" id="WKF-0K-322"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="E5Y-2c-GJE"/>
                     </view>
                     <navigationItem key="navigationItem" title="Add new Item" id="ESz-LR-xiX">
@@ -89,8 +125,11 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="isDoneSwitf" destination="Ttm-bh-zqV" id="3iC-FR-Hzx"/>
+                        <outlet property="titleTextField" destination="MDO-3N-dyE" id="XVM-QP-poV"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ily-Bn-Kr4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2948" y="32.833583208395808"/>
         </scene>

@@ -36,6 +36,11 @@ class AddItemViewController: UIViewController {
         super.viewDidLoad()
         
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        titleTextField?.becomeFirstResponder()
+    }
 
 
 }

@@ -33,6 +33,7 @@ class Todo:Codable{
         })
         
         
+        
 //        return items.index{ (todoItem)  in
 //            todoItem === item
 //        }
@@ -42,6 +43,10 @@ class Todo:Codable{
 //        }
         
         
+    }
+    func move(from sourceIndex:Int, to destinationIndex:Int){
+        let item = items.remove(at: sourceIndex)
+        items.insert(item, at: destinationIndex)
     }
 }
 

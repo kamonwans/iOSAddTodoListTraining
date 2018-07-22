@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ItemDetailViewControllerDelegate, TodoItemTableCellDelegate{
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ItemDetailViewControllerDelegate, TodoItemTableCellDelegate, UITableViewDragDelegate, UITableViewDropDelegate{
     func todoItemTableViewCellCheckBoxButtonDidTap(cell: TodoItemTableViewCell) {
         if let indexPath = tableView.indexPath(for: cell){
             todo.item(at: indexPath.row).toggleIsDone()
@@ -19,6 +19,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     var todo = Todo()
+    
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        return [UIDragItem(itemProvider: NSItemProvider())]
+        
+    }
+    
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
+    }
+    
+    func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
+        return session.localDragSession != nil
+    }
+    
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+        return UITableViewDropProposal(operation: .move,intent: .insertAtDestinationIndexPath)
+    }
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -73,6 +89,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell
     }
     
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        todo.move(from: sourceIndexPath.row, to: destinationIndexPath.row)
+        savetodo()
+    }
+    
     //MARK: TableView delegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -82,6 +103,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     //MARK: initial
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.dragDelegate = self
+        tableView.dragInteractionEnabled = true
+        tableView.dropDelegate = self
+        
         loadTodo()
        
     }
